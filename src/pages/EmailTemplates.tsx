@@ -1,17 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import EmailTemplateCard from "../components/EmailTemplateCard";
-import {  emailTemplateData } from "../data/emailTemplateData";
 import { useNavigate } from "react-router-dom";
+import { Email, emailTemplateData } from "../data/emailTemplateData";
 
 const EmailTemplates: React.FC = () => {
   const navigate = useNavigate();
-  const numberOfCards = 12;
+  const [templates, setTemplates] = useState<Email[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
+  const numberOfCards = 8; // Adjust if necessary
 
   const handleCreateTemplate = () => {
-    navigate("/template-editor"); // Navigate to TemplateEditor for creating a new template
+    navigate("/template-editor");
   };
 
+  useEffect(() => {
+    // Set mounted state
+    setIsMounted(true);
+
+    // Populate templates with default instances of emailTemplateData
+    const initialTemplates = Array.from({ length: numberOfCards }, () => ({
+      ...emailTemplateData,
+    }));
+    setTemplates(initialTemplates); // Initialize with default templates
+
+    // Check if there's a new template in sessionStorage
+    const storedTemplate = sessionStorage.getItem("newTemplate");
+    console.log("Stored Template:", storedTemplate); // Debug log
+    if (storedTemplate && isMounted) {
+      const newTemplate = JSON.parse(storedTemplate) as Email;
+      // Update state to include existing templates and the new one
+      setTemplates((prevTemplates) => [...prevTemplates, newTemplate]);
+      // Clear the new template from sessionStorage
+      sessionStorage.removeItem("newTemplate");
+    }
+
+    // Clean up the effect
+    return () => setIsMounted(false);
+  }, [isMounted]);
 
   return (
     <>
@@ -63,7 +89,6 @@ const EmailTemplates: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Email Card Section */}
       <Box
         sx={{
           maxHeight: "75vh",
@@ -75,15 +100,11 @@ const EmailTemplates: React.FC = () => {
         }}
       >
         <Grid container spacing={2}>
-          {Array(numberOfCards)
-            .fill(emailTemplateData)
-            .map((email, index) => (
-              <Grid item xs={12} sm={6} md={3} lg={4} key={index}>
-                <EmailTemplateCard
-                  email={email}
-                />
-              </Grid>
-            ))}
+          {templates.map((email, index) => (
+            <Grid item xs={12} sm={6} md={3} lg={4} key={index}>
+              <EmailTemplateCard email={email} />
+            </Grid>
+          ))}
         </Grid>
       </Box>
     </>
