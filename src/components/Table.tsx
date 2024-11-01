@@ -15,6 +15,7 @@ interface TableComponentProps {
   headers: Array<string>;
   getRowBackgroundColor?: (index: number) => string;
   renderActions?: (row: any) => ReactNode;
+  onRowClick?: (row: any) => void;
 }
 
 const TableComponent: React.FC<TableComponentProps> = ({
@@ -22,6 +23,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
   headers,
   getRowBackgroundColor,
   renderActions,
+  onRowClick,
 }) => {
   return (
     <TableContainer
@@ -53,7 +55,10 @@ const TableComponent: React.FC<TableComponentProps> = ({
                 backgroundColor: getRowBackgroundColor
                   ? getRowBackgroundColor(index)
                   : "#FFF",
+                cursor: onRowClick ? "pointer" : "default",
+                textDecoration: onRowClick ? "underline" : "none",
               }}
+              onClick={() => onRowClick && onRowClick(row)}
             >
               {/* Render each value except 'id' */}
               {Object.entries(row).map(([key, value], idx) => {

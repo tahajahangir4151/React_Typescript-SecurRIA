@@ -9,7 +9,7 @@ import {
   ListItem,
   Divider,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+// import EditIcon from "@mui/icons-material/Edit";
 
 interface EmailCardProps {
   email: Email;
@@ -55,7 +55,7 @@ const EmailTemplateCard: React.FC<EmailCardProps> = ({ email }) => {
         </Grid>
 
         {/* Edit Button */}
-        <Grid item xs={2} sx={{ display: "flex", justifyContent: "flex-end" }}>
+        {/* <Grid item xs={2} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             variant="contained"
             color="primary"
@@ -68,7 +68,7 @@ const EmailTemplateCard: React.FC<EmailCardProps> = ({ email }) => {
             <EditIcon sx={{ color: "#ffffff", marginRight: 0.5 }} />
             Edit
           </Button>
-        </Grid>
+        </Grid> */}
       </Grid>
       <Box sx={{ mt: 8, textAlign: "center" }}>
         <img

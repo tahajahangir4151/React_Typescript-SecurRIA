@@ -9,8 +9,8 @@ import EmailTemplates from "./pages/EmailTemplates";
 import LandinPageTemplate from "./pages/LandinPageTemplate";
 import CompaignRunning from "./pages/CompaignRunning";
 import Reporting from "./pages/Reporting";
-import { Settings } from "@mui/icons-material";
 import TemplateEditor from "./components/TemplateEditor";
+import Settings from "./pages/Settings";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(

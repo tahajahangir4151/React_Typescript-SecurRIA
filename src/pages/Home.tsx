@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Grid,
-   Typography,
-} from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { compaignData } from "../data/compaignData";
 import TableComponent from "../components/Table";
 import PaginationComponent from "../components/Pagination";

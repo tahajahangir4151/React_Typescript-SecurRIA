@@ -50,7 +50,7 @@ const EmailEditor: React.FC = () => {
           fontFamily: "Nunito Sans",
         }}
       >
-        New Email Templates
+        New Email Template
       </Typography>
       <Typography
         color="#000000"
@@ -127,7 +127,7 @@ const EmailEditor: React.FC = () => {
           "& .editorClassName": {
             minHeight: "200px", // Set a minimum height for the editor
             padding: "10px",
-            border:"1px solid black",
+            border: "1px solid black",
             fontSize: "14px",
             color: "#000",
             "&:focus": {
@@ -151,6 +151,38 @@ const EmailEditor: React.FC = () => {
         >
           Create Template
         </Button>
+      </Box>
+
+      {/* Preview Box */}
+      <Box
+        mt={5}
+        p={3}
+        border="1px solid #cccccc"
+        borderRadius="5px"
+        bgcolor="#f7f7f7"
+      >
+        <Typography variant="h6" fontWeight="bold" color="#0473E9">
+          Preview Email Template
+        </Typography>
+        <Box mt={2}>
+          <Typography fontWeight="bold">From:</Typography>
+          <Typography>Account Support &lt;example@gmail.com&gt;</Typography>
+        </Box>
+        <Box mt={1}>
+          <Typography fontWeight="bold">To:</Typography>
+          <Typography>Recipient &lt;recipient@gmail.com&gt;</Typography>
+        </Box>
+        <Box mt={1}>
+          <Typography fontWeight="bold">Subject:</Typography>
+          <Typography>{subject || "Enter a subject above..."}</Typography>
+        </Box>
+        <Box mt={1}>
+          <Typography fontWeight="bold">Message:</Typography>
+          <Typography whiteSpace="pre-line">
+            {editorState.getCurrentContent().getPlainText() ||
+              "Type a message in the editor above..."}
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

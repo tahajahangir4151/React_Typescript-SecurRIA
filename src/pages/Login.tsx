@@ -11,11 +11,11 @@ import LogoImg from "../images/Logo.jpeg";
 import { useNavigate } from "react-router-dom";
 import validator from "validator";
 
-interface loginProps{
-  onLoginSuccess:()=>void
+interface loginProps {
+  onLoginSuccess: () => void;
 }
 
-const Login: React.FC<loginProps> = ({onLoginSuccess}) => {
+const Login: React.FC<loginProps> = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [emailError, setEmailError] = useState<string>("");
@@ -62,7 +62,7 @@ const Login: React.FC<loginProps> = ({onLoginSuccess}) => {
 
       // Trigger authentication state change in App component
       onLoginSuccess();
-      
+
       // Navigate to dashboard
       navigate("/");
     }
