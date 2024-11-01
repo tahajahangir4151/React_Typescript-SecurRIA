@@ -17,6 +17,11 @@ function App() {
     !!localStorage.getItem("userInfo")
   );
 
+   const handleLogout = () => {
+     localStorage.removeItem("userInfo"); // Clear user data from local storage
+     setIsAuthenticated(false); // Update authentication state
+   };
+
   useEffect(() => {
     const handleStorageChange = () => {
       setIsAuthenticated(!!localStorage.getItem("userInfo"));
@@ -32,7 +37,7 @@ function App() {
           path="/"
           element={
             isAuthenticated ? (
-              <DashboardLayout>
+              <DashboardLayout onLogout={handleLogout}>
                 <Home />
               </DashboardLayout>
             ) : (
@@ -43,7 +48,7 @@ function App() {
         <Route
           path="/new-email-campaign"
           element={
-            <DashboardLayout>
+            <DashboardLayout onLogout={handleLogout}>
               <NewEmailCompaign />
             </DashboardLayout>
           }
@@ -51,7 +56,7 @@ function App() {
         <Route
           path="/targets"
           element={
-            <DashboardLayout>
+            <DashboardLayout onLogout={handleLogout}>
               <Targets />
             </DashboardLayout>
           }
@@ -59,7 +64,7 @@ function App() {
         <Route
           path="/email-templates"
           element={
-            <DashboardLayout>
+            <DashboardLayout onLogout={handleLogout}>
               <EmailTemplates />
             </DashboardLayout>
           }
@@ -67,7 +72,7 @@ function App() {
         <Route
           path="/landing-page-templates"
           element={
-            <DashboardLayout>
+            <DashboardLayout onLogout={handleLogout}>
               <LandinPageTemplate />
             </DashboardLayout>
           }
@@ -75,7 +80,7 @@ function App() {
         <Route
           path="/campaigns-running"
           element={
-            <DashboardLayout>
+            <DashboardLayout onLogout={handleLogout}>
               <CompaignRunning />
             </DashboardLayout>
           }
@@ -83,7 +88,7 @@ function App() {
         <Route
           path="/reporting"
           element={
-            <DashboardLayout>
+            <DashboardLayout onLogout={handleLogout}>
               <Reporting />{" "}
             </DashboardLayout>
           }
@@ -91,7 +96,7 @@ function App() {
         <Route
           path="/settings"
           element={
-            <DashboardLayout>
+            <DashboardLayout onLogout={handleLogout}>
               <Settings />
             </DashboardLayout>
           }
@@ -99,7 +104,7 @@ function App() {
         <Route
           path="/template-editor"
           element={
-            <DashboardLayout>
+            <DashboardLayout onLogout={handleLogout}>
               <TemplateEditor />
             </DashboardLayout>
           }

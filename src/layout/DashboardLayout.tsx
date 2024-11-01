@@ -9,9 +9,10 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 
-const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const DashboardLayout: React.FC<{
+  children: React.ReactNode;
+  onLogout: () => void;
+}> = ({ children, onLogout }) => {
   const [activeMenu, setActiveMenu] = useState<string>("");
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false); // Add this line
@@ -47,12 +48,14 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
           <Sidebar
             setActiveMenu={setActiveMenu}
             setIsSidebarOpen={handleMenuItemClick} // Pass the click handler
+            onLogout={onLogout}
           />
         </Drawer>
       ) : (
         <Sidebar
           setActiveMenu={setActiveMenu}
           setIsSidebarOpen={handleMenuItemClick} // Pass the click handler
+          onLogout={onLogout} // Pass the onLogout function
         />
       )}
       <Box sx={{ flexGrow: 1 }}>

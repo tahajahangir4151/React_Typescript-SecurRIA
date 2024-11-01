@@ -6,11 +6,13 @@ import { Link, useLocation } from "react-router-dom";
 interface SidebarProps {
   setActiveMenu: (menuName: string) => void;
   setIsSidebarOpen?: (isOpen: boolean) => void;
+  onLogout: () => void; // Add onLogout prop
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
   setActiveMenu,
   setIsSidebarOpen,
+  onLogout,
 }) => {
   const [activeItem, setActiveItem] = useState("Dashboard");
   const location = useLocation();
@@ -103,9 +105,8 @@ const Sidebar: React.FC<SidebarProps> = ({
           fontWeight: "bold",
         }}
         onClick={() => {
-          if (setIsSidebarOpen) {
-            setIsSidebarOpen(false);
-          }
+          if (setIsSidebarOpen) setIsSidebarOpen(false);
+          onLogout(); // Trigger the logout action
         }}
       >
         Log Out
