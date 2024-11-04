@@ -1,11 +1,24 @@
 import React, { useState } from "react";
-import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  IconButton,
+  useTheme,
+} from "@mui/material";
 import TableComponent from "../components/Table";
 import PaginationComponent from "../components/Pagination";
 import { targetData as initialData, TargetData } from "../data/targetData";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TargetDialog from "../components/TargetDialog";
+import {
+  ButtonGrid,
+  DescriptionTypography,
+  StyledButton,
+  StyledGrid,
+  StyledHeading,
+  TitleTypography,
+} from "../styles/HomeStyles";
 
 const Targets: React.FC = () => {
   const [page, setPage] = useState(0);
@@ -13,6 +26,7 @@ const Targets: React.FC = () => {
   const [data, setData] = useState<TargetData[]>(initialData);
   const [editingTarget, setEditingTarget] = useState<TargetData | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
+  const theme = useTheme();
 
   const handleAddClick = () => {
     setEditingTarget(null);
@@ -20,8 +34,8 @@ const Targets: React.FC = () => {
   };
 
   const handleEditClick = (target: TargetData) => {
-    setEditingTarget(target); // Set the editing target
-    setOpenDialog(true); // Open dialog
+    setEditingTarget(target);
+    setOpenDialog(true);
   };
 
   const handleDeleteClick = (targetId: number) => {
@@ -30,12 +44,10 @@ const Targets: React.FC = () => {
 
   const handleDialogSubmit = (newTarget: TargetData) => {
     if (editingTarget) {
-      // Update existing target
       setData(
         data.map((target) => (target.id === newTarget.id ? newTarget : target))
       );
     } else {
-      // Add new target
       const newId = data.length ? Math.max(...data.map((t) => t.id)) + 1 : 1;
       setData([...data, { ...newTarget, id: newId }]);
     }
@@ -53,47 +65,32 @@ const Targets: React.FC = () => {
     setPage(0);
   };
 
+  // Function to dynamically set row background colors
   const getRowBackgroundColor = (index: number) => {
-    return index % 2 === 0 ? "#E6F2FF" : "#FFFFFF";
+    return index % 2 === 0 ? "#E6F2FF" : theme.palette.common.white;
   };
 
   const headers = ["Name", "Email", "Title", "Option"];
 
   return (
     <>
-      <Grid container spacing={2} sx={{ padding: 2 }}>
+      <StyledGrid container spacing={2}>
         <Grid item xs={12} md={8}>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography
-              component={"h4"}
-              variant="h4"
-              sx={{
-                color: "#0473E9",
-                fontWeight: "bold",
-                fontSize: { xs: "24px", md: "30px" },
-                fontFamily: "Nunito Sans",
-              }}
-            >
-              Target
-            </Typography>
-            <Typography
-              color="#000000"
-              mt={"10px"}
-              fontSize={{ xs: "12px", md: "14px" }}
-            >
+          <StyledHeading>
+            <TitleTypography variant="h4">Target</TitleTypography>
+            <DescriptionTypography>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s
-            </Typography>
-          </Box>
+            </DescriptionTypography>
+          </StyledHeading>
         </Grid>
-        <Grid
+        <ButtonGrid
           item
           xs={12}
           md={4}
-          sx={{ display: "flex", justifyContent: "flex-end" }}
         >
-          <Button
+          <StyledButton
             sx={{
               backgroundColor: "#0473E9",
               color: "#FFFFFF",
@@ -108,9 +105,9 @@ const Targets: React.FC = () => {
             onClick={handleAddClick}
           >
             Add Target
-          </Button>
-        </Grid>
-      </Grid>
+          </StyledButton>
+        </ButtonGrid>
+      </StyledGrid>
       <Box sx={{ mt: 3 }}>
         <TableComponent
           data={data.slice(

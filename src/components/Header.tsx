@@ -1,30 +1,28 @@
 import React from "react";
 import {
-  AppBar,
   Avatar,
-  Box,
   IconButton,
   Toolbar,
   Typography,
+  useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import profileImg from "../images/ae4134169130626f5a6ff03cd06719fb.png";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { Appbar, ProfileContainer, ProfileName } from "../styles/HeaderStyle";
 
 interface HeaderProps {
-  title: string; // Prop for the title of the header
-  onMenuClick: () => void; // Prop for menu icon click
-  isMobile: boolean; // Prop to detect small screen
+  title: string;
+  onMenuClick: () => void;
+  isMobile: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({ title, onMenuClick, isMobile }) => {
+  const theme = useTheme();
   return (
-    <AppBar
-      position="static"
-      sx={{ backgroundColor: "#0473E9", justifyContent: "space-between" }}
-    >
+    <Appbar>
       <Toolbar>
-        {isMobile && ( // Show menu icon only on small screens
+        {isMobile && (
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -38,22 +36,15 @@ const Header: React.FC<HeaderProps> = ({ title, onMenuClick, isMobile }) => {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           {title}
         </Typography>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <ProfileContainer>
           <Avatar alt="User Profile" src={profileImg} />
-          <Typography
-            sx={{
-              ml: 2,
-              color: "#FFFFFF",
-              fontSize: "15px",
-              fontWeight: "400",
-            }}
-          >
-            Jenny Wilson
-          </Typography>
-          <ArrowDropDownIcon sx={{ color: "#000000", ml: 0.5 }} />
-        </Box>
+          <ProfileName>Jenny Wilson</ProfileName>
+          <ArrowDropDownIcon
+            sx={{ color: theme.palette.secondary.main, ml: 0.5 }}
+          />
+        </ProfileContainer>
       </Toolbar>
-    </AppBar>
+    </Appbar>
   );
 };
 

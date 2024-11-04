@@ -6,6 +6,7 @@ import { Box, TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Email } from "../data/emailTemplateData";
 import logoUrl from "../images/png-clipart-paypal-logo-paypal-blue-text-removebg-preview.png";
+import { DescriptionTypography, TitleTypography } from "../styles/HomeStyles";
 
 const EmailEditor: React.FC = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -40,27 +41,13 @@ const EmailEditor: React.FC = () => {
   };
 
   return (
-    <Box sx={{ padding: 3 }}>
-      <Typography
-        variant="h4"
-        sx={{
-          color: "#0473E9",
-          fontWeight: "bold",
-          fontSize: { xs: "24px", md: "30px" },
-          fontFamily: "Nunito Sans",
-        }}
-      >
-        New Email Template
-      </Typography>
-      <Typography
-        color="#000000"
-        mt={"10px"}
-        fontSize={{ xs: "12px", md: "14px" }}
-      >
+    <Box sx={{ padding: 0 }}>
+      <TitleTypography variant="h4">New Email Template</TitleTypography>
+      <DescriptionTypography>
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry. Lorem Ipsum has been the industry's standard dummy text ever
         since the 1500s.
-      </Typography>
+      </DescriptionTypography>
       <Box sx={{ marginTop: "30px" }}>
         <Typography
           variant="body1"

@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Container,
-  TextField,
-  Typography,
-  Link,
-} from "@mui/material";
+import { Box } from "@mui/material";
 import LogoImg from "../images/Logo.jpeg";
 import { useNavigate } from "react-router-dom";
 import validator from "validator";
+import {
+  ForgotLink,
+  ForgotPwdBox,
+  FormContainer,
+  FormHeading,
+  FormSecondaryHeading,
+  Logo,
+  StyledButton,
+  StyledContainer,
+  StyledTextField,
+} from "../styles/loginStyle";
 
 interface loginProps {
   onLoginSuccess: () => void;
@@ -59,11 +63,7 @@ const Login: React.FC<loginProps> = ({ onLoginSuccess }) => {
     if (isvalid) {
       localStorage.setItem("userInfo", JSON.stringify({ email, password }));
       console.log("userInfo", JSON.stringify({ email, password }));
-
-      // Trigger authentication state change in App component
       onLoginSuccess();
-
-      // Navigate to dashboard
       navigate("/");
     }
     setEmail("");
@@ -72,62 +72,21 @@ const Login: React.FC<loginProps> = ({ onLoginSuccess }) => {
 
   return (
     <>
-      {/* Logo in the top left corner */}
-      <Box
-        component={"img"}
-        src={LogoImg}
-        alt="Logo"
-        sx={{ position: "absolute", top: "50px", left: "50px", height: "60px" }}
-      />
+      <Logo src={LogoImg} alt="Logo" />
 
       {/* Login Form */}
-      <Container
-        maxWidth="xs"
-        sx={{
-          marginTop: "170px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Box
-          sx={{
-            padding: "30px",
-            boxShadow: 3,
-            borderRadius: "10px",
-            backgroundColor: "#fff",
-            textAlign: "center",
-          }}
-        >
-          <Typography
-            variant="h5"
-            sx={{
-              color: "#0473E9",
-              fontWeight: "bold",
-              fontSize: "30px",
-              fontFamily: "Nunito Sans",
-              textWrap: "nowrap",
-            }}
-          >
-            Login into your account
-          </Typography>
+      <StyledContainer maxWidth="xs">
+        <FormContainer>
+          <FormHeading variant="h5">Login into your account</FormHeading>
 
-          <Typography
-            sx={{
-              fontSize: "14px",
-              fontWeight: "400",
-              lineHeight: "20px",
-              color: "#000000",
-              marginTop: "8px",
-            }}
-          >
+          <FormSecondaryHeading>
             Gain access to your personalized profile and secure your digital
             identity with a single click.
-          </Typography>
+          </FormSecondaryHeading>
 
           {/* Login Form Fields */}
           <form style={{ marginTop: "20px" }} onSubmit={handleSubmit}>
-            <TextField
+            <StyledTextField
               label="Email"
               fullWidth
               margin="normal"
@@ -135,13 +94,9 @@ const Login: React.FC<loginProps> = ({ onLoginSuccess }) => {
               onChange={(e) => setEmail(e.target.value)}
               error={!!emailError}
               helperText={emailError}
-              sx={{
-                backgroundColor: "#f9f9f9",
-                borderRadius: "5px",
-              }}
             />
 
-            <TextField
+            <StyledTextField
               label="Password"
               fullWidth
               margin="normal"
@@ -150,51 +105,19 @@ const Login: React.FC<loginProps> = ({ onLoginSuccess }) => {
               onChange={(e) => setPassword(e.target.value)}
               error={!!passwordError}
               helperText={passwordError}
-              sx={{ backgroundColor: "#f9f9f9", borderRadius: "5px" }}
             />
 
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              marginTop="8px"
-            >
+            <ForgotPwdBox>
               <Box></Box>
-              <Link
-                href="#"
-                underline="hover"
-                sx={{
-                  fontSize: "14px",
-                  fontWeight: "bolder",
-                  color: "#0473E9",
-                }}
-              >
-                Forgot Password?
-              </Link>
-            </Box>
+              <ForgotLink to={""}>Forgot Password?</ForgotLink>
+            </ForgotPwdBox>
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              sx={{
-                backgroundColor: "#0473E9",
-                borderRadius: "50px",
-                fontSize: "16px",
-                padding: "10px",
-                width: "85%",
-                marginTop: "20px",
-                "&:hover": {
-                  backgroundColor: "#035bb5",
-                },
-              }}
-            >
+            <StyledButton type="submit" fullWidth variant="contained">
               LOGIN
-            </Button>
+            </StyledButton>
           </form>
-        </Box>
-      </Container>
+        </FormContainer>
+      </StyledContainer>
     </>
   );
 };

@@ -1,14 +1,21 @@
-import { Box, Grid, Typography } from '@mui/material';
-import React, { useState } from 'react'
-import TableComponent from '../components/Table';
-import { campaignRunningData } from '../data/compaignRunningData';
-import PaginationComponent from '../components/Pagination';
-import { useNavigate } from 'react-router-dom';
+import { Box, Grid, useTheme } from "@mui/material";
+import React, { useState } from "react";
+import TableComponent from "../components/Table";
+import { campaignRunningData } from "../data/compaignRunningData";
+import PaginationComponent from "../components/Pagination";
+import { useNavigate } from "react-router-dom";
+import {
+  DescriptionTypography,
+  StyledGrid,
+  StyledHeading,
+  TitleTypography,
+} from "../styles/HomeStyles";
 
 const CompaignRunning: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const handlePageChange = (_event: unknown, newPage: number) => {
     setPage(newPage);
@@ -19,12 +26,12 @@ const CompaignRunning: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); // Reset to first page when changing rows per page
+    setPage(0);
   };
 
   // Function to dynamically set row background colors
   const getRowBackgroundColor = (index: number) => {
-    return index % 2 === 0 ? "#E6F2FF" : "#FFFFFF";
+    return index % 2 === 0 ? "#E6F2FF" : theme.palette.common.white;
   };
 
   const headers = [
@@ -39,41 +46,26 @@ const CompaignRunning: React.FC = () => {
   // Handle row click based on the "quarterStaff" value
   const handleRowClick = (row: any) => {
     if (row.quarterStaff === "Preview Email") {
-      navigate("/email-templates"); // Navigate to the email template page
+      navigate("/email-templates");
     } else if (row.quarterStaff === "Preview Landing Page") {
-      navigate("/landing-page-templates"); // Navigate to the landing page
+      navigate("/landing-page-templates");
     }
   };
 
   return (
     <>
-      <Grid container spacing={2} sx={{ padding: 2 }}>
+      <StyledGrid container spacing={2}>
         <Grid item xs={12} md={8}>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography
-              component={"h4"}
-              variant="h4"
-              sx={{
-                color: "#0473E9",
-                fontWeight: "bold",
-                fontSize: { xs: "24px", md: "30px" }, // Responsive font size
-                fontFamily: "Nunito Sans",
-              }}
-            >
-              Campaigns Running
-            </Typography>
-            <Typography
-              color="#000000"
-              mt={"10px"}
-              fontSize={{ xs: "12px", md: "14px" }}
-            >
+          <StyledHeading>
+            <TitleTypography variant="h4">Campaigns Running</TitleTypography>
+            <DescriptionTypography>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s.
-            </Typography>
-          </Box>
+            </DescriptionTypography>
+          </StyledHeading>
         </Grid>
-      </Grid>
+      </StyledGrid>
       <Box sx={{ mt: 3 }}>
         <TableComponent
           data={campaignRunningData.slice(
@@ -96,4 +88,4 @@ const CompaignRunning: React.FC = () => {
   );
 };
 
-export default CompaignRunning
+export default CompaignRunning;

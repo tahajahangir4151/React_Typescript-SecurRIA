@@ -1,14 +1,22 @@
 import React, { useState } from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 import { compaignData } from "../data/compaignData";
 import TableComponent from "../components/Table";
 import PaginationComponent from "../components/Pagination";
+import {
+  ButtonGrid,
+  DescriptionTypography,
+  StyledButton,
+  StyledGrid,
+  StyledHeading,
+  TitleTypography,
+} from "../styles/HomeStyles";
 
 const Home: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const theme = useTheme();
 
-  // Pagination Logic
   const handlePageChange = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -18,12 +26,12 @@ const Home: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); // Reset to first page when changing rows per page
+    setPage(0);
   };
 
   // Function to dynamically set row background colors
   const getRowBackgroundColor = (index: number) => {
-    return index % 2 === 0 ? "#E6F2FF" : "#FFFFFF";
+    return index % 2 === 0 ? "#E6F2FF" : theme.palette.common.white;
   };
 
   const headers = [
@@ -36,55 +44,21 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Grid container spacing={2} sx={{ padding: 2 }}>
+      <StyledGrid container spacing={2}>
         <Grid item xs={12} md={8}>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography
-              component={"h4"}
-              variant="h4"
-              sx={{
-                color: "#0473E9",
-                fontWeight: "bold",
-                fontSize: { xs: "24px", md: "30px" }, // Responsive font size
-                fontFamily: "Nunito Sans",
-              }}
-            >
-              Campaigns Running
-            </Typography>
-            <Typography
-              color="#000000"
-              mt={"10px"}
-              fontSize={{ xs: "12px", md: "14px" }}
-            >
+          <StyledHeading>
+            <TitleTypography variant="h4">Campaigns Running</TitleTypography>
+            <DescriptionTypography>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s.
-            </Typography>
-          </Box>
+            </DescriptionTypography>
+          </StyledHeading>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          md={4}
-          sx={{ display: "flex", justifyContent: "flex-end" }}
-        >
-          <Button
-            sx={{
-              backgroundColor: "#0473E9",
-              color: "#FFFFFF",
-              fontSize: "16px",
-              padding: "5px 20px",
-              borderRadius: "5px",
-              height: "55px",
-              "&:hover": {
-                backgroundColor: "#005BB5",
-              },
-            }}
-          >
-            Create New Email
-          </Button>
-        </Grid>
-      </Grid>
+        <ButtonGrid item xs={12} md={4}>
+          <StyledButton>Create New Email</StyledButton>
+        </ButtonGrid>
+      </StyledGrid>
       <Box sx={{ mt: 3 }}>
         <TableComponent
           data={compaignData.slice(

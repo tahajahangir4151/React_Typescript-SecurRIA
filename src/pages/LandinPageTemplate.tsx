@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import EmailTemplateCard from "../components/EmailTemplateCard";
 import { useNavigate } from "react-router-dom";
 import { Email, emailTemplateData } from "../data/emailTemplateData";
+import {
+  ButtonGrid,
+  DescriptionTypography,
+  StyledButton,
+  StyledGrid,
+  StyledHeading,
+  TitleTypography,
+} from "../styles/HomeStyles";
 
 const LandinPageTemplate: React.FC = () => {
   const navigate = useNavigate();
@@ -41,53 +49,24 @@ const LandinPageTemplate: React.FC = () => {
 
   return (
     <>
-      <Grid container spacing={2} sx={{ padding: 2 }}>
+      <StyledGrid container spacing={2}>
         <Grid item xs={12} md={8}>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography
-              component={"h4"}
-              variant="h4"
-              sx={{
-                color: "#0473E9",
-                fontWeight: "bold",
-                fontSize: { xs: "24px", md: "30px" },
-                fontFamily: "Nunito Sans",
-              }}
-            >
+          <StyledHeading>
+            <TitleTypography variant="h4">
               Landing Page Templates{" "}
-            </Typography>
-            <Typography
-              color="#000000"
-              mt={"10px"}
-              fontSize={{ xs: "12px", md: "14px" }}
-            >
+            </TitleTypography>
+            <DescriptionTypography>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry.
-            </Typography>
-          </Box>
+            </DescriptionTypography>
+          </StyledHeading>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          md={4}
-          sx={{ display: "flex", justifyContent: "flex-end" }}
-        >
-          <Button
-            onClick={handleCreateTemplate}
-            sx={{
-              backgroundColor: "#0473E9",
-              color: "#FFFFFF",
-              fontSize: "16px",
-              padding: "5px 20px",
-              borderRadius: "5px",
-              height: "55px",
-              "&:hover": { backgroundColor: "#005BB5" },
-            }}
-          >
+        <ButtonGrid item xs={12} md={4}>
+          <StyledButton onClick={handleCreateTemplate}>
             Create Template
-          </Button>
-        </Grid>
-      </Grid>
+          </StyledButton>
+        </ButtonGrid>
+      </StyledGrid>
 
       <Box
         sx={{

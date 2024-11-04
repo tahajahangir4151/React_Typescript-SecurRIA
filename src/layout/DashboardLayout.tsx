@@ -15,7 +15,7 @@ const DashboardLayout: React.FC<{
 }> = ({ children, onLogout }) => {
   const [activeMenu, setActiveMenu] = useState<string>("");
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false); // Add this line
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -26,8 +26,8 @@ const DashboardLayout: React.FC<{
   };
 
   const handleMenuItemClick = () => {
-    setMobileOpen(false); // Close mobile drawer
-    setIsSidebarOpen(false); // Close sidebar
+    setMobileOpen(false); 
+    setIsSidebarOpen(false);
   };
 
   const headerTitle = activeMenu ? `Dashboard | ${activeMenu}` : "Dashboard";
@@ -47,15 +47,15 @@ const DashboardLayout: React.FC<{
         >
           <Sidebar
             setActiveMenu={setActiveMenu}
-            setIsSidebarOpen={handleMenuItemClick} // Pass the click handler
+            setIsSidebarOpen={handleMenuItemClick} 
             onLogout={onLogout}
           />
         </Drawer>
       ) : (
         <Sidebar
           setActiveMenu={setActiveMenu}
-          setIsSidebarOpen={handleMenuItemClick} // Pass the click handler
-          onLogout={onLogout} // Pass the onLogout function
+          setIsSidebarOpen={handleMenuItemClick} 
+          onLogout={onLogout} 
         />
       )}
       <Box sx={{ flexGrow: 1 }}>

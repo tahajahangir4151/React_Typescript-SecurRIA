@@ -14,6 +14,11 @@ import {
 import Grid from "@mui/material/Grid";
 import "react-datepicker/dist/react-datepicker.css";
 import { SelectChangeEvent } from "@mui/material";
+import {
+  DescriptionTypography,
+  StyledHeading,
+  TitleTypography,
+} from "../styles/HomeStyles";
 
 //Define the shape of the form data
 interface FormData {
@@ -148,7 +153,7 @@ const NewEmailCompaign: React.FC = () => {
   const handleNowButtonClick = () => {
     setFormData((prev) => ({
       ...prev,
-      launchDate: new Date(), // Set current date and time
+      launchDate: new Date(),
     }));
     handleSubmit();
   };
@@ -156,7 +161,7 @@ const NewEmailCompaign: React.FC = () => {
   const menuProps = {
     PaperProps: {
       style: {
-        maxHeight: 200, // Limit height to 200px
+        maxHeight: 200,
       },
     },
   };
@@ -165,29 +170,14 @@ const NewEmailCompaign: React.FC = () => {
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography
-              component={"h4"}
-              variant="h4"
-              sx={{
-                color: "#0473E9",
-                fontWeight: "bold",
-                fontSize: { xs: "24px", md: "30px" },
-                fontFamily: "Nunito Sans",
-              }}
-            >
-              New Email Campaign{" "}
-            </Typography>
-            <Typography
-              color="#000000"
-              mt={"10px"}
-              fontSize={{ xs: "12px", md: "14px" }}
-            >
+          <StyledHeading>
+            <TitleTypography variant="h4">New Email Campaign </TitleTypography>
+            <DescriptionTypography>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s.
-            </Typography>
-          </Box>
+            </DescriptionTypography>
+          </StyledHeading>
         </Grid>
 
         <Grid item xs={12} md={6} mt={"10px"}>
