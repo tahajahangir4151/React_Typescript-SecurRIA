@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 interface SidebarProps {
   setActiveMenu: (menuName: string) => void;
   setIsSidebarOpen?: (isOpen: boolean) => void;
-  onLogout: () => void; // Add onLogout prop
+  onLogout: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -36,7 +36,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       setActiveItem(currentItem.text);
       setActiveMenu(currentItem.text === "Dashboard" ? "" : currentItem.text);
     } else if (location.pathname === "/template-editor") {
-      setActiveItem("Email Templates"); // Set the title to "Email Templates"
+      setActiveItem("Email Templates"); 
       setActiveMenu("Email Templates");
     }
   }, [location.pathname, menuItems, setActiveMenu]);
@@ -106,7 +106,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         }}
         onClick={() => {
           if (setIsSidebarOpen) setIsSidebarOpen(false);
-          onLogout(); // Trigger the logout action
+          onLogout();
         }}
       >
         Log Out

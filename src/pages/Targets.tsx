@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Grid,
-  IconButton,
-  useTheme,
-} from "@mui/material";
+import { Box, Grid, IconButton, useTheme } from "@mui/material";
 import TableComponent from "../components/Table";
 import PaginationComponent from "../components/Pagination";
 import { targetData as initialData, TargetData } from "../data/targetData";
@@ -18,7 +13,7 @@ import {
   StyledGrid,
   StyledHeading,
   TitleTypography,
-} from "../styles/HomeStyles";
+} from "../styles/PageHeadingStyle";
 
 const Targets: React.FC = () => {
   const [page, setPage] = useState(0);
@@ -85,11 +80,7 @@ const Targets: React.FC = () => {
             </DescriptionTypography>
           </StyledHeading>
         </Grid>
-        <ButtonGrid
-          item
-          xs={12}
-          md={4}
-        >
+        <ButtonGrid item xs={12} md={4}>
           <StyledButton
             sx={{
               backgroundColor: "#0473E9",

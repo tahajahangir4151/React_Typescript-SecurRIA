@@ -63,10 +63,9 @@ const TableComponent: React.FC<TableComponentProps> = ({
               {/* Render each value except 'id' */}
               {Object.entries(row).map(([key, value], idx) => {
                 if (key !== "id") {
-                  // Skip rendering the 'id'
                   return <TableCell key={idx}>{value as ReactNode}</TableCell>;
                 }
-                return null; // Do nothing for 'id'
+                return null;
               })}
 
               {/* Add action icons to the last column */}
@@ -75,8 +74,8 @@ const TableComponent: React.FC<TableComponentProps> = ({
                   <Box
                     sx={{
                       display: "flex",
-                      justifyContent: "flex-start", // Align icons horizontally
-                      alignItems: "center", // Vertically center the icons
+                      justifyContent: "flex-start",
+                      alignItems: "center",
                     }}
                   >
                     {renderActions(row)}

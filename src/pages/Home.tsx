@@ -10,7 +10,7 @@ import {
   StyledGrid,
   StyledHeading,
   TitleTypography,
-} from "../styles/HomeStyles";
+} from "../styles/PageHeadingStyle";
 
 const Home: React.FC = () => {
   const [page, setPage] = useState(0);

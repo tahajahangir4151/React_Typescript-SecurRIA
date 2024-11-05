@@ -10,7 +10,7 @@ import {
   StyledGrid,
   StyledHeading,
   TitleTypography,
-} from "../styles/HomeStyles";
+} from "../styles/PageHeadingStyle";
 
 const LandinPageTemplate: React.FC = () => {
   const navigate = useNavigate();

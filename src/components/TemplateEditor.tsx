@@ -6,7 +6,10 @@ import { Box, TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Email } from "../data/emailTemplateData";
 import logoUrl from "../images/png-clipart-paypal-logo-paypal-blue-text-removebg-preview.png";
-import { DescriptionTypography, TitleTypography } from "../styles/HomeStyles";
+import {
+  DescriptionTypography,
+  TitleTypography,
+} from "../styles/PageHeadingStyle";
 
 const EmailEditor: React.FC = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());

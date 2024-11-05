@@ -10,7 +10,7 @@ import {
   StyledGrid,
   StyledHeading,
   TitleTypography,
-} from "../styles/HomeStyles";
+} from "../styles/PageHeadingStyle";
 
 const EmailTemplates: React.FC = () => {
   const navigate = useNavigate();

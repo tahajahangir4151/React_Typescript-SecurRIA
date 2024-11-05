@@ -18,7 +18,7 @@ import {
   DescriptionTypography,
   StyledHeading,
   TitleTypography,
-} from "../styles/HomeStyles";
+} from "../styles/PageHeadingStyle";
 
 //Define the shape of the form data
 interface FormData {
