@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-  Button,
-  Typography,
-  IconButton,
-} from "@mui/material";
+import { Dialog, DialogContent } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import {
+  InputLabel,
+  StyledCloseButton,
+  StyledDialogueAction,
+  StyledDialogueButton,
+  StyledDialogueTitle,
+  StyledSubmitButton,
+  StyledTextField,
+  Subtitle,
+} from "../styles/TargetDialogueStyle";
 
 interface TargetData {
   id: number;
@@ -22,7 +23,7 @@ interface TargetDialogProps {
   open: boolean;
   onClose: () => void;
   onSubmit: (target: TargetData) => void;
-  initialData?: TargetData | null; // To support editing
+  initialData?: TargetData | null;
 }
 
 const TargetDialog: React.FC<TargetDialogProps> = ({
@@ -38,9 +39,9 @@ const TargetDialog: React.FC<TargetDialogProps> = ({
     name: false,
     email: false,
     title: false,
+    emailFormat: false,
   });
 
-  // Reset form when dialog opens
   useEffect(() => {
     if (open && initialData) {
       setName(initialData.name);
@@ -53,9 +54,8 @@ const TargetDialog: React.FC<TargetDialogProps> = ({
     }
   }, [open, initialData]);
 
-  // Form validation and submit
   const handleSubmit = () => {
-    setErrors({ name: false, email: false, title: false });
+    setErrors({ name: false, email: false, title: false, emailFormat: false });
 
     let hasError = false;
     if (!name) {
@@ -66,8 +66,7 @@ const TargetDialog: React.FC<TargetDialogProps> = ({
       setErrors((prev) => ({ ...prev, email: true }));
       hasError = true;
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      setErrors((prev) => ({ ...prev, email: true }));
-      alert("Invalid email format!");
+      setErrors((prev) => ({ ...prev, emailFormat: true }));
       hasError = true;
     }
     if (!title) {
@@ -82,44 +81,25 @@ const TargetDialog: React.FC<TargetDialogProps> = ({
         email,
         title,
       };
-
       onSubmit(newTarget);
     }
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle
-        sx={{ textAlign: "center", color: "#0473E9", fontSize: "40px" }}
-      >
-        {initialData ? "Update Target" : "Add Target"}{" "}
-        <IconButton
-          //   edge="end"
-          color="inherit"
-          onClick={onClose}
-          sx={{ position: "absolute", right: 8, top: 8, color: "#BE0505" }} // Positioning the close button
-        >
+    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+      <StyledDialogueTitle>
+        {initialData ? "Update Target" : "Add Target"}
+        <StyledCloseButton onClick={onClose}>
           <CloseIcon />
-        </IconButton>
-      </DialogTitle>
-      <Typography
-        variant="body1"
-        color="#000000"
-        textAlign={"center"}
-        fontSize={"14px"}
-        padding={"15px"}
-      >
+        </StyledCloseButton>
+      </StyledDialogueTitle>
+      <Subtitle variant="body1">
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry.
-      </Typography>
+      </Subtitle>
       <DialogContent>
-        <Typography
-          variant="body1"
-          sx={{ marginBottom: "5px", fontWeight: "bold", color: "#000000" }}
-        >
-          Name:
-        </Typography>
-        <TextField
+        <InputLabel variant="body1">Name:</InputLabel>
+        <StyledTextField
           fullWidth
           placeholder="Enter Name"
           name="name"
@@ -127,130 +107,38 @@ const TargetDialog: React.FC<TargetDialogProps> = ({
           onChange={(e) => setName(e.target.value)}
           error={errors.name}
           helperText={errors.name && "Name is required"}
-          InputLabelProps={{
-            shrink: true,
-            sx: {
-              color: "#000",
-              fontWeight: "bold",
-              fontSize: "16px",
-            },
-          }}
-          InputProps={{
-            sx: {
-              mt: "5px",
-              border: "1px solid #053065",
-              height: "45px",
-              borderRadius: "5px",
-              "&::placeholder": {
-                color: "#8E8E8E",
-                opacity: 1,
-                fontWeight: "500",
-              },
-            },
-          }}
-        />{" "}
-        <Typography
-          variant="body1"
-          sx={{ fontWeight: "bold", color: "#000000", mt: "10px" }}
-        >
-          Email:{" "}
-        </Typography>
-        <TextField
-          //   label="Email"
+        />
+        <InputLabel variant="body1">Email:</InputLabel>
+        <StyledTextField
           fullWidth
           placeholder="Enter Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          error={errors.email}
-          helperText={errors.email && "Email is required"}
-          margin="normal"
-          InputLabelProps={{
-            shrink: true,
-            sx: {
-              color: "#000",
-              fontWeight: "bold",
-              fontSize: "16px",
-            },
-          }}
-          InputProps={{
-            sx: {
-              //   mt: "5px",
-              border: "1px solid #053065",
-              height: "45px",
-              borderRadius: "5px",
-              "&::placeholder": {
-                color: "#8E8E8E",
-                opacity: 1,
-                fontWeight: "500",
-              },
-            },
-          }}
-        />{" "}
-        <Typography
-          variant="body1"
-          sx={{ fontWeight: "bold", color: "#000000", mt: "10px" }}
-        >
-          Title:{" "}
-        </Typography>
-        <TextField
+          error={errors.email || errors.emailFormat}
+          helperText={
+            errors.email
+              ? "Email is required"
+              : errors.emailFormat
+              ? "Invalid email format"
+              : ""
+          }
+        />
+        <InputLabel variant="body1">Title:</InputLabel>
+        <StyledTextField
           fullWidth
           placeholder="Enter Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           error={errors.title}
           helperText={errors.title && "Title is required"}
-          margin="normal"
-          InputLabelProps={{
-            // shrink: true,
-            sx: {
-              color: "#000",
-              fontWeight: "bold",
-              fontSize: "16px",
-            },
-          }}
-          InputProps={{
-            sx: {
-              //   mt: "5px",
-              border: "1px solid #053065",
-              height: "45px",
-              borderRadius: "5px",
-              "&::placeholder": {
-                color: "#8E8E8E",
-                opacity: 1,
-                fontWeight: "500",
-              },
-            },
-          }}
         />
       </DialogContent>
-      <DialogActions sx={{ justifyContent: "center", marginBottom: "15px" }}>
-        {" "}
-        {/* Centering the buttons */}
-        <Button
-          onClick={onClose}
-          sx={{
-            backgroundColor: "#000000",
-            color: "#FFFFFF",
-            "&:hover": {
-              backgroundColor: "#000000",
-            },
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          onClick={handleSubmit}
-          sx={{
-            backgroundColor: "#0473E9",
-            color: "#FFFFFF",
-            "&:hover": {
-              backgroundColor: "#005BB5",
-            },
-          }}
-        >
-          {initialData ? "Update" : "Add"}
-        </Button>
-      </DialogActions>
+      <StyledDialogueAction>
+        <StyledDialogueButton onClick={onClose}>Cancel</StyledDialogueButton>
+        <StyledSubmitButton onClick={handleSubmit}>
+          {initialData ? "Update" : "Done"}
+        </StyledSubmitButton>
+      </StyledDialogueAction>
     </Dialog>
   );
 };

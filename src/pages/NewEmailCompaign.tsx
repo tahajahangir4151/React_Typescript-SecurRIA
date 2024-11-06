@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
-  Box,
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
   FormHelperText,
   MenuItem,
-  Select,
-  TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import "react-datepicker/dist/react-datepicker.css";
@@ -19,6 +16,20 @@ import {
   StyledHeading,
   TitleTypography,
 } from "../styles/PageHeadingStyle";
+import {
+  DateTimeContainer,
+  FollowUpContainer,
+  StyledBtn,
+  StyledBtnContainer,
+  StyledLabel,
+  StyledNowButton,
+  StyledScheduledBtn,
+  StyledSelect,
+  StyledSimulateBtn,
+  StyledTextField,
+} from "../styles/NewEmailCompaignStyle";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 
 //Define the shape of the form data
 interface FormData {
@@ -57,7 +68,7 @@ const NewEmailCompaign: React.FC = () => {
     timeZone: "",
     startTime: "",
   });
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(true);
   const [timeZones, setTimeZones] = useState<string[]>([]);
   const [errors, setErrors] = useState<Errors>({
     emailName: false,
@@ -68,6 +79,7 @@ const NewEmailCompaign: React.FC = () => {
     timeZone: false,
     startTime: false,
   });
+  const theme = useTheme();
 
   useEffect(() => {
     const fetchTimeZones = async () => {
@@ -94,7 +106,7 @@ const NewEmailCompaign: React.FC = () => {
   };
 
   const handleSelectChange = (
-    e: SelectChangeEvent<string>,
+    e: SelectChangeEvent<unknown>,
     field: keyof FormData
   ) => {
     setFormData({ ...formData, [field]: e.target.value as string });
@@ -133,7 +145,6 @@ const NewEmailCompaign: React.FC = () => {
   const handleSubmit = () => {
     if (validateForm()) {
       console.log(formData);
-      // Reset the form data
       setFormData({
         emailName: "",
         targetEmail: "",
@@ -181,13 +192,8 @@ const NewEmailCompaign: React.FC = () => {
         </Grid>
 
         <Grid item xs={12} md={6} mt={"10px"}>
-          <Typography
-            variant="body1"
-            sx={{ marginBottom: "5px", fontWeight: "bold", color: "#0473E9" }}
-          >
-            Email Name:
-          </Typography>
-          <TextField
+          <StyledLabel variant="body1">Email Name:</StyledLabel>
+          <StyledTextField
             fullWidth
             placeholder="Enter Email Name"
             name="emailName"
@@ -195,56 +201,28 @@ const NewEmailCompaign: React.FC = () => {
             onChange={handleChange}
             error={errors.emailName}
             helperText={errors.emailName && "Email is required"}
-            InputLabelProps={{
-              shrink: true,
-              sx: {
-                color: "#000",
-                fontWeight: "bold",
-                fontSize: "16px",
-              },
-            }}
-            InputProps={{
-              sx: {
-                mt: "5px",
-                border: "1px solid #053065",
-                height: "45px",
-                borderRadius: "5px",
-                "&::placeholder": {
-                  color: "#8E8E8E",
-                  opacity: 1,
-                  fontWeight: "500",
-                },
-              },
-            }}
           />
         </Grid>
 
         <Grid item xs={12} md={6} mt={"10px"}>
-          <Typography
-            variant="body1"
-            sx={{ marginBottom: "5px", fontWeight: "bold", color: "#0473E9" }}
-          >
-            Target Email:{" "}
-          </Typography>
+          <StyledLabel variant="body1">Target Email: </StyledLabel>
           <FormControl fullWidth error={errors.targetEmail}>
-            <Select
+            <StyledSelect
               labelId="target-email-label"
               value={formData.targetEmail}
               onChange={(e) => handleSelectChange(e, "targetEmail")}
               displayEmpty
+              IconComponent={ExpandMoreIcon}
               inputProps={{
-                placeholder: "Add Target Email",
-              }}
-              sx={{
-                mt: "5px",
-                border: "1px solid #053065",
-                height: "45px",
-                borderRadius: "5px",
+                "aria-label": "Add Target Email",
               }}
             >
+              <MenuItem value="" disabled>
+                Add target email
+              </MenuItem>
               <MenuItem value="Target 1">Target 1</MenuItem>
               <MenuItem value="Target 2">Target 2</MenuItem>
-            </Select>{" "}
+            </StyledSelect>{" "}
             {errors.targetEmail && (
               <FormHelperText>Target Email is required</FormHelperText>
             )}
@@ -252,30 +230,24 @@ const NewEmailCompaign: React.FC = () => {
         </Grid>
 
         <Grid item xs={12} md={6} mt={"10px"}>
-          <Typography
-            variant="body1"
-            sx={{ marginBottom: "5px", fontWeight: "bold", color: "#0473E9" }}
-          >
-            Phishing Email:{" "}
-          </Typography>
+          <StyledLabel variant="body1">Phishing Email: </StyledLabel>
           <FormControl fullWidth error={errors.phishingEmail}>
-            <Select
+            <StyledSelect
+              labelId="select-email-templete-label"
               value={formData.phishingEmail}
               onChange={(e) => handleSelectChange(e, "phishingEmail")}
               displayEmpty
+              IconComponent={ExpandMoreIcon}
               inputProps={{
-                placeholder: "Select email template",
-              }}
-              sx={{
-                mt: "5px",
-                border: "1px solid #053065",
-                height: "45px",
-                borderRadius: "5px",
+                "aria-label": "Select email tempelet",
               }}
             >
+              <MenuItem value="" disabled>
+                Select email tempelet{" "}
+              </MenuItem>
               <MenuItem value="Target 1">Template 1</MenuItem>
               <MenuItem value="Target 2">Template 2</MenuItem>
-            </Select>{" "}
+            </StyledSelect>{" "}
             {errors.phishingEmail && (
               <FormHelperText>Phishing Email is required</FormHelperText>
             )}
@@ -283,30 +255,24 @@ const NewEmailCompaign: React.FC = () => {
         </Grid>
 
         <Grid item xs={12} md={6} mt={"10px"}>
-          <Typography
-            variant="body1"
-            sx={{ marginBottom: "5px", fontWeight: "bold", color: "#0473E9" }}
-          >
-            Landing Page:{" "}
-          </Typography>
+          <StyledLabel variant="body1">Landing Page: </StyledLabel>
           <FormControl fullWidth error={errors.landingPage}>
-            <Select
+            <StyledSelect
+              labelId="select-email-templete-label"
               value={formData.landingPage}
               onChange={(e) => handleSelectChange(e, "landingPage")}
               displayEmpty
+              IconComponent={ExpandMoreIcon}
               inputProps={{
-                placeholder: "Select landing page template",
-              }}
-              sx={{
-                mt: "5px",
-                border: "1px solid #053065",
-                height: "45px",
-                borderRadius: "5px",
+                "aria-label": "Select landing page templete",
               }}
             >
+              <MenuItem value="" disabled>
+                Select landing page templete{" "}
+              </MenuItem>
               <MenuItem value="Target 1">Template 1</MenuItem>
               <MenuItem value="Target 2">Template 2</MenuItem>
-            </Select>
+            </StyledSelect>
             {errors.landingPage && (
               <FormHelperText>Landing Page is required</FormHelperText>
             )}
@@ -314,104 +280,57 @@ const NewEmailCompaign: React.FC = () => {
         </Grid>
 
         <Grid item xs={12} md={6} mt={"10px"}>
-          <Typography
-            variant="body1"
-            sx={{ marginBottom: "5px", fontWeight: "bold", color: "#0473E9" }}
-          >
-            Date and Time of Launch:{" "}
-          </Typography>
-          <Box
-            display={"flex"}
-            flexDirection={{ xs: "column", md: "row" }}
-            mt={"15px"}
-          >
-            <Button
-              sx={{
-                backgroundColor: "#0473E9",
-                color: "#FFFFFF",
-                fontSize: "17px",
-                width: { xs: "100%", md: "48%" },
-                textTransform: "none",
-                mb: { xs: "10px", md: "0" },
-              }}
-              onClick={handleNowButtonClick}
-            >
+          <StyledLabel variant="body1">Date and Time of Launch: </StyledLabel>
+          <DateTimeContainer>
+            <StyledNowButton onClick={handleNowButtonClick}>
               Now
-            </Button>
-            <Button
-              sx={{
-                border: "1px solid #0473E9",
-                color: "#0473E9",
-                fontSize: "17px",
-                width: { xs: "100%", md: "48%" }, // Full width on small screens
-                textTransform: "none",
-                ml: { xs: "0px", lg: "15px" },
-              }}
-              onClick={() => setShowDatePicker(true)}
-            >
+            </StyledNowButton>
+            <StyledScheduledBtn onClick={() => setShowDatePicker(true)}>
               Schedule Date & Time{" "}
-            </Button>
-          </Box>{" "}
+            </StyledScheduledBtn>
+          </DateTimeContainer>
           {showDatePicker && (
             <>
-              <Typography
+              <StyledLabel
                 variant="body1"
                 sx={{
-                  marginBottom: "5px",
-                  fontWeight: "bold",
-                  color: "#0473E9",
                   mt: "15px",
                 }}
               >
                 Select Time Zone:
-              </Typography>
+              </StyledLabel>
               <FormControl fullWidth error={errors.timeZone}>
-                <Select
+                <StyledSelect
                   value={formData.timeZone}
                   onChange={(e) => handleSelectChange(e, "timeZone")}
                   displayEmpty
                   MenuProps={menuProps}
-                  sx={{
-                    mt: "5px",
-                    border: "1px solid #053065",
-                    height: "45px",
-                    borderRadius: "5px",
-                    "&.Mui-error .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "red",
-                    },
+                  IconComponent={ExpandMoreIcon}
+                  inputProps={{
+                    "aria-label": "Select Time Zone",
                   }}
                 >
                   <MenuItem value="">
-                    <em>Select Time Zone</em>
+                    <p>Select Time Zone</p>
                   </MenuItem>
                   {timeZones.map((zone, index) => (
                     <MenuItem key={index} value={zone}>
                       {zone}
                     </MenuItem>
                   ))}
-                </Select>
+                </StyledSelect>
 
-                {/* Display the error message in red */}
                 {errors.timeZone && (
                   <FormHelperText error>Time zone is required</FormHelperText>
                 )}
               </FormControl>
 
-              {/* Row with Start Date and Start Time */}
               <Grid container spacing={2} mt={"10px"}>
                 <Grid item xs={12} sm={6}>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      marginBottom: "5px",
-                      fontWeight: "bold",
-                      color: "#0473E9",
-                      mt: "15px",
-                    }}
-                  >
+                  <StyledLabel variant="body1" sx={{ mt: "15px" }}>
                     Start Date:
-                  </Typography>
-                  <TextField
+                  </StyledLabel>
+                  <StyledTextField
                     fullWidth
                     type="date"
                     placeholder="Start Date"
@@ -426,43 +345,14 @@ const NewEmailCompaign: React.FC = () => {
                     }
                     error={errors.launchDate}
                     helperText={errors.launchDate && "Start date is required"}
-                    InputLabelProps={{
-                      shrink: true,
-                      sx: {
-                        color: "#000",
-                        fontWeight: "bold",
-                        fontSize: "16px",
-                      },
-                    }}
-                    InputProps={{
-                      sx: {
-                        mt: "5px",
-                        border: "1px solid #053065",
-                        height: "45px",
-                        borderRadius: "5px",
-                        "&::placeholder": {
-                          color: "#8E8E8E",
-                          opacity: 1,
-                          fontWeight: "500",
-                        },
-                      },
-                    }}
                   />
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      marginBottom: "5px",
-                      fontWeight: "bold",
-                      color: "#0473E9",
-                      mt: "15px",
-                    }}
-                  >
+                  <StyledLabel variant="body1" sx={{ mt: "15px" }}>
                     Start Time:
-                  </Typography>
-                  <TextField
+                  </StyledLabel>
+                  <StyledTextField
                     fullWidth
                     type="time"
                     placeholder="Start Time"
@@ -471,27 +361,6 @@ const NewEmailCompaign: React.FC = () => {
                     onChange={handleChange}
                     error={errors.startTime}
                     helperText={errors.startTime && "Start time is required"}
-                    InputLabelProps={{
-                      shrink: true,
-                      sx: {
-                        color: "#000",
-                        fontWeight: "bold",
-                        fontSize: "16px",
-                      },
-                    }}
-                    InputProps={{
-                      sx: {
-                        mt: "5px",
-                        border: "1px solid #053065",
-                        height: "45px",
-                        borderRadius: "5px",
-                        "&::placeholder": {
-                          color: "#8E8E8E",
-                          opacity: 1,
-                          fontWeight: "500",
-                        },
-                      },
-                    }}
                   />
                 </Grid>
               </Grid>
@@ -500,13 +369,8 @@ const NewEmailCompaign: React.FC = () => {
         </Grid>
 
         <Grid item xs={12} md={6} mt={"10px"}>
-          <Typography
-            variant="body1"
-            sx={{ marginBottom: "5px", fontWeight: "bold", color: "#0473E9" }}
-          >
-            Select Follow-Up Email
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <StyledLabel variant="body1">Select Follow-Up Email</StyledLabel>
+          <FollowUpContainer>
             <FormControlLabel
               control={
                 <Checkbox
@@ -517,7 +381,10 @@ const NewEmailCompaign: React.FC = () => {
               }
               label={
                 <>
-                  <Typography variant="body1" sx={{ color: "#0473E9" }}>
+                  <Typography
+                    variant="body1"
+                    sx={{ color: theme.palette.primary.main }}
+                  >
                     Option 1:
                   </Typography>
                   <Typography variant="body2">
@@ -537,7 +404,10 @@ const NewEmailCompaign: React.FC = () => {
               }
               label={
                 <>
-                  <Typography variant="body1" sx={{ color: "#0473E9" }}>
+                  <Typography
+                    variant="body1"
+                    sx={{ color: theme.palette.primary.main }}
+                  >
                     Option 2:
                   </Typography>
                   <Typography variant="body2">
@@ -546,52 +416,22 @@ const NewEmailCompaign: React.FC = () => {
                 </>
               }
             />
-            {/* Buttons aligned under the checkboxes */}
-            <Box display={"flex"} justifyContent={"flex-start"} mt={"40px"}>
+            <StyledBtnContainer>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={4}>
-                  <Button
-                    sx={{
-                      border: "1px solid #0473E9",
-                      color: "#0473E9",
-                      fontSize: "17px",
-                      textTransform: "none",
-                      width: "100%",
-                    }}
-                  >
-                    Preview Simulation Email
-                  </Button>
+                  <StyledBtn>Preview Simulation Email</StyledBtn>
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <Button
-                    sx={{
-                      border: "1px solid #0473E9",
-                      color: "#0473E9",
-                      fontSize: "17px",
-                      textTransform: "none",
-                      width: "100%",
-                    }}
-                  >
-                    Send Test Email{" "}
-                  </Button>
+                  <StyledBtn>Send Test Email </StyledBtn>
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <Button
-                    sx={{
-                      backgroundColor: "#0473E9",
-                      color: "#FFFFFF",
-                      fontSize: "17px",
-                      textTransform: "none",
-                      width: "100%",
-                    }}
-                    onClick={handleSubmit}
-                  >
+                  <StyledSimulateBtn onClick={handleSubmit}>
                     Start Simulation Email{" "}
-                  </Button>
+                  </StyledSimulateBtn>
                 </Grid>
               </Grid>
-            </Box>
-          </Box>
+            </StyledBtnContainer>
+          </FollowUpContainer>
         </Grid>
       </Grid>
     </>
