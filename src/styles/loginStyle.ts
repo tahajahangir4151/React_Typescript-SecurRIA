@@ -22,7 +22,7 @@ export const FormContainer = styled(Box)(({ theme }) => ({
     borderRadius: "10px",
     backgroundColor: theme.palette.common.white,
     textAlign: "center",
-    width: "60vh"
+    width: "100%",
 }))
 
 export const FormHeading = styled(Typography)(({ theme }) => ({
@@ -56,11 +56,12 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
     },
 }))
 
-export const ForgotPwdBox = styled(Box)(() => ({
+export const ForgotPwdBox = styled(Box)(({ theme }) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: "8px"
+    marginTop: "8px",
+    fontFamily: theme.typography.fontFamily
 }))
 
 export const ForgotLink = styled(Link)(({ theme }) => ({
