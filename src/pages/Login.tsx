@@ -74,7 +74,6 @@ const Login: React.FC<loginProps> = ({ onLoginSuccess }) => {
     <>
       <Logo src={LogoImg} alt="Logo" />
 
-      {/* Login Form */}
       <StyledContainer maxWidth="xs">
         <FormContainer>
           <FormHeading variant="h5">Login into your account</FormHeading>
@@ -84,7 +83,6 @@ const Login: React.FC<loginProps> = ({ onLoginSuccess }) => {
             identity with a single click.
           </FormSecondaryHeading>
 
-          {/* Login Form Fields */}
           <form style={{ marginTop: "20px" }} onSubmit={handleSubmit}>
             <StyledTextField
               label="Email"

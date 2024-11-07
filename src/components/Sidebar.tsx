@@ -1,7 +1,8 @@
-import { Box, Divider } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import LogoImg from "../images/Logo.jpeg";
 import { Link, useLocation } from "react-router-dom";
+import { Logo, LogoutBtn, Separator, SidebarContainer } from "../styles/SideBarStyle";
 
 interface SidebarProps {
   setActiveMenu: (menuName: string) => void;
@@ -16,6 +17,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const [activeItem, setActiveItem] = useState("Dashboard");
   const location = useLocation();
+  const theme = useTheme();
 
   const menuItems = [
     { text: "Dashboard", path: "/" },
@@ -36,33 +38,16 @@ const Sidebar: React.FC<SidebarProps> = ({
       setActiveItem(currentItem.text);
       setActiveMenu(currentItem.text === "Dashboard" ? "" : currentItem.text);
     } else if (location.pathname === "/template-editor") {
-      setActiveItem("Email Templates"); 
+      setActiveItem("Email Templates");
       setActiveMenu("Email Templates");
     }
   }, [location.pathname, menuItems, setActiveMenu]);
 
   return (
-    <Box
-      component={"div"}
-      sx={{
-        width: "250px",
-        backgroundColor: "#FFFFFF",
-        height: "100vh",
-        padding: "20px",
-        boxSizing: "border-box",
-        display: "flex",
-        flexDirection: "column",
-        boxShadow: "rgba(0, 0, 0, 0.50) 0px 3px 8px",
-      }}
-    >
-      <Box
-        component={"img"}
-        sx={{ textAlign: "center", marginBottom: "20px" }}
-        src={LogoImg}
-        alt="Logo"
-      />
+    <SidebarContainer>
+      <Logo src={LogoImg} alt="Logo" />
 
-      <Divider sx={{ borderBottomWidth: 2.5, marginBottom: "20px" }} />
+      <Separator />
 
       <Box sx={{ flexGrow: 1 }}>
         {menuItems.map((item) => (
@@ -73,9 +58,12 @@ const Sidebar: React.FC<SidebarProps> = ({
               display: "block",
               padding: "10px 0",
               textDecoration: activeItem === item.text ? "underline" : "none",
-              color: activeItem === item.text ? "#0473E9" : "#000000",
+              color:
+                activeItem === item.text
+                  ? theme.palette.primary.main
+                  : theme.palette.secondary.main,
               fontWeight: activeItem === item.text ? "bold" : "normal",
-              fontFamily: "Nunito Sans",
+              fontFamily: theme.typography.fontFamily,
             }}
             onClick={() => {
               setActiveItem(item.text);
@@ -89,29 +77,17 @@ const Sidebar: React.FC<SidebarProps> = ({
           </Link>
         ))}
       </Box>
+      <Separator />
 
-      <Divider sx={{ borderBottomWidth: 2.5, marginY: "20px" }} />
-
-      <Box
-        component={"button"}
-        sx={{
-          width: "100%",
-          padding: "15px 0",
-          backgroundColor: "#0473E9",
-          color: "#FFFFFF",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer",
-          fontWeight: "bold",
-        }}
+      <LogoutBtn
         onClick={() => {
           if (setIsSidebarOpen) setIsSidebarOpen(false);
           onLogout();
         }}
       >
         Log Out
-      </Box>
-    </Box>
+      </LogoutBtn>
+    </SidebarContainer>
   );
 };
 

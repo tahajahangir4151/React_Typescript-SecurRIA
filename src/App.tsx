@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DashboardLayout from "./layout/DashboardLayout";
 import Home from "./pages/Home";
@@ -16,11 +16,13 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
     !!localStorage.getItem("userInfo")
   );
+  const navigate = useNavigate();
 
-   const handleLogout = () => {
-     localStorage.removeItem("userInfo"); // Clear user data from local storage
-     setIsAuthenticated(false); // Update authentication state
-   };
+  const handleLogout = () => {
+    localStorage.removeItem("userInfo");
+    setIsAuthenticated(false);
+    navigate("/");
+  };
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -31,86 +33,84 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            isAuthenticated ? (
-              <DashboardLayout onLogout={handleLogout}>
-                <Home />
-              </DashboardLayout>
-            ) : (
-              <Login onLoginSuccess={() => setIsAuthenticated(true)} />
-            )
-          }
-        />{" "}
-        <Route
-          path="/new-email-campaign"
-          element={
+    <Routes>
+      <Route
+        path="/"
+        element={
+          isAuthenticated ? (
             <DashboardLayout onLogout={handleLogout}>
-              <NewEmailCompaign />
+              <Home />
             </DashboardLayout>
-          }
-        />
-        <Route
-          path="/targets"
-          element={
-            <DashboardLayout onLogout={handleLogout}>
-              <Targets />
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path="/email-templates"
-          element={
-            <DashboardLayout onLogout={handleLogout}>
-              <EmailTemplates />
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path="/landing-page-templates"
-          element={
-            <DashboardLayout onLogout={handleLogout}>
-              <LandinPageTemplate />
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path="/campaigns-running"
-          element={
-            <DashboardLayout onLogout={handleLogout}>
-              <CompaignRunning />
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path="/reporting"
-          element={
-            <DashboardLayout onLogout={handleLogout}>
-              <Reporting />{" "}
-            </DashboardLayout>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <DashboardLayout onLogout={handleLogout}>
-              <Settings />
-            </DashboardLayout>
-          }
-        />{" "}
-        <Route
-          path="/template-editor"
-          element={
-            <DashboardLayout onLogout={handleLogout}>
-              <TemplateEditor />
-            </DashboardLayout>
-          }
-        />
-      </Routes>
-    </Router>
+          ) : (
+            <Login onLoginSuccess={() => setIsAuthenticated(true)} />
+          )
+        }
+      />{" "}
+      <Route
+        path="/new-email-campaign"
+        element={
+          <DashboardLayout onLogout={handleLogout}>
+            <NewEmailCompaign />
+          </DashboardLayout>
+        }
+      />
+      <Route
+        path="/targets"
+        element={
+          <DashboardLayout onLogout={handleLogout}>
+            <Targets />
+          </DashboardLayout>
+        }
+      />
+      <Route
+        path="/email-templates"
+        element={
+          <DashboardLayout onLogout={handleLogout}>
+            <EmailTemplates />
+          </DashboardLayout>
+        }
+      />
+      <Route
+        path="/landing-page-templates"
+        element={
+          <DashboardLayout onLogout={handleLogout}>
+            <LandinPageTemplate />
+          </DashboardLayout>
+        }
+      />
+      <Route
+        path="/campaigns-running"
+        element={
+          <DashboardLayout onLogout={handleLogout}>
+            <CompaignRunning />
+          </DashboardLayout>
+        }
+      />
+      <Route
+        path="/reporting"
+        element={
+          <DashboardLayout onLogout={handleLogout}>
+            <Reporting />{" "}
+          </DashboardLayout>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <DashboardLayout onLogout={handleLogout}>
+            <Settings />
+          </DashboardLayout>
+        }
+      />{" "}
+      <Route
+        path="/template-editor"
+        element={
+          <DashboardLayout onLogout={handleLogout}>
+            <TemplateEditor />
+          </DashboardLayout>
+        }
+      />
+    </Routes>
   );
 }
 

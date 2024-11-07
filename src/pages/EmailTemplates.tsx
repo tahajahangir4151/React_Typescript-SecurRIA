@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import EmailTemplateCard from "../components/EmailTemplateCard";
 import { useNavigate } from "react-router-dom";
 import { Email, emailTemplateData } from "../data/emailTemplateData";
@@ -11,6 +11,7 @@ import {
   StyledHeading,
   TitleTypography,
 } from "../styles/PageHeadingStyle";
+import { EmailTemplateCardContainer } from "../styles/EmailTemplateStyles";
 
 const EmailTemplates: React.FC = () => {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ const EmailTemplates: React.FC = () => {
           item
           xs={12}
           md={4}
-          sx={{ display: "flex", justifyContent: "flex-end" }}
+          sx={{ display: "flex", justifyContent: "flex-end", mb: "10px" }}
         >
           <StyledButton onClick={handleCreateTemplate}>
             Create Template
@@ -71,24 +72,15 @@ const EmailTemplates: React.FC = () => {
         </ButtonGrid>
       </StyledGrid>
 
-      <Box
-        sx={{
-          maxHeight: "75vh",
-          overflowY: "auto",
-          marginTop: 2,
-          border: "0.5px solid #C1C1C1",
-          padding: "10px",
-          borderRadius: "10px",
-        }}
-      >
+      <EmailTemplateCardContainer>
         <Grid container spacing={2}>
           {templates.map((email, index) => (
-            <Grid item xs={12} sm={6} md={3} lg={4} key={index}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
               <EmailTemplateCard email={email} />
             </Grid>
           ))}
         </Grid>
-      </Box>
+      </EmailTemplateCardContainer>
     </>
   );
 };

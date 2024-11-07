@@ -1,6 +1,10 @@
 import { Box, Button, Select, TextField, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
+interface StyledSelectProps {
+    hasValue: boolean;
+}
+
 export const StyledLabel = styled(Typography)(({ theme }) => ({
     marginBottom: "5px",
     fontWeight: "bold",
@@ -31,17 +35,17 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
 }));
 
 
-export const StyledSelect = styled(Select)(({ theme }) => ({
+export const StyledSelect = styled(Select)<StyledSelectProps>(({ theme, hasValue }) => ({
     marginTop: "5px",
     border: `1px solid #053065`,
     height: "45px",
     borderRadius: theme.shape.borderRadius,
     "& .MuiSelect-select": {
-        color: "#8E8E8E",
-        fontWeight: "500",
+        color: hasValue ? "#000" : "#8E8E8E",
+  fontWeight: "500",
     },
     "& .MuiSvgIcon-root": {
-        color: theme.palette.primary.main, 
+        color: theme.palette.primary.main,
     },
 }));
 

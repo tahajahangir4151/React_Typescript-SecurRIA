@@ -60,7 +60,6 @@ const Targets: React.FC = () => {
     setPage(0);
   };
 
-  // Function to dynamically set row background colors
   const getRowBackgroundColor = (index: number) => {
     return index % 2 === 0 ? "#E6F2FF" : theme.palette.common.white;
   };
@@ -81,22 +80,7 @@ const Targets: React.FC = () => {
           </StyledHeading>
         </Grid>
         <ButtonGrid item xs={12} md={4}>
-          <StyledButton
-            sx={{
-              backgroundColor: "#0473E9",
-              color: "#FFFFFF",
-              fontSize: "16px",
-              padding: "5px 20px",
-              borderRadius: "5px",
-              height: "55px",
-              "&:hover": {
-                backgroundColor: "#005BB5",
-              },
-            }}
-            onClick={handleAddClick}
-          >
-            Add Target
-          </StyledButton>
+          <StyledButton onClick={handleAddClick}>Add Target</StyledButton>
         </ButtonGrid>
       </StyledGrid>
       <Box sx={{ mt: 3 }}>
@@ -111,7 +95,10 @@ const Targets: React.FC = () => {
             <>
               <IconButton color="primary" onClick={() => handleEditClick(row)}>
                 <EditIcon
-                  sx={{ backgroundColor: "#0473E9", color: "#FFFFFF" }}
+                  sx={{
+                    backgroundColor: theme.palette.primary.main,
+                    color: theme.palette.common.white,
+                  }}
                 />
               </IconButton>
               <IconButton
@@ -119,7 +106,7 @@ const Targets: React.FC = () => {
                 onClick={() => handleDeleteClick(row.id)}
               >
                 <DeleteIcon
-                  sx={{ backgroundColor: "#BE0505", color: "#FFFFFF" }}
+                  sx={{ backgroundColor: "#BE0505", color: theme.palette.common.white }}
                 />
               </IconButton>
             </>

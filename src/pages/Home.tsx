@@ -21,7 +21,6 @@ const Home: React.FC = () => {
     setPage(newPage);
   };
 
-  // Handle Number of rows change per page
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -29,7 +28,6 @@ const Home: React.FC = () => {
     setPage(0);
   };
 
-  // Function to dynamically set row background colors
   const getRowBackgroundColor = (index: number) => {
     return index % 2 === 0 ? "#E6F2FF" : theme.palette.common.white;
   };

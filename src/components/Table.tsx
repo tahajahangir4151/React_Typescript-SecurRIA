@@ -55,15 +55,31 @@ const TableComponent: React.FC<TableComponentProps> = ({
                 backgroundColor: getRowBackgroundColor
                   ? getRowBackgroundColor(index)
                   : "#FFF",
-                cursor: onRowClick ? "pointer" : "default",
-                textDecoration: onRowClick ? "underline" : "none",
               }}
-              onClick={() => onRowClick && onRowClick(row)}
             >
-              {/* Render each value except 'id' */}
               {Object.entries(row).map(([key, value], idx) => {
                 if (key !== "id") {
-                  return <TableCell key={idx}>{value as ReactNode}</TableCell>;
+                  return (
+                    <TableCell key={idx}>
+                      {idx === 0 ? (
+                        <a
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (onRowClick) onRowClick(row);
+                          }}
+                          style={{
+                            color: "#000",
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {value as ReactNode}
+                        </a>
+                      ) : (
+                        (value as ReactNode)
+                      )}
+                    </TableCell>
+                  );
                 }
                 return null;
               })}

@@ -30,7 +30,6 @@ import {
 } from "../styles/NewEmailCompaignStyle";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-
 //Define the shape of the form data
 interface FormData {
   emailName: string;
@@ -68,7 +67,7 @@ const NewEmailCompaign: React.FC = () => {
     timeZone: "",
     startTime: "",
   });
-  const [showDatePicker, setShowDatePicker] = useState(true);
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [timeZones, setTimeZones] = useState<string[]>([]);
   const [errors, setErrors] = useState<Errors>({
     emailName: false,
@@ -100,10 +99,13 @@ const NewEmailCompaign: React.FC = () => {
     fetchTimeZones();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: false });
   };
+
 
   const handleSelectChange = (
     e: SelectChangeEvent<unknown>,
@@ -216,6 +218,7 @@ const NewEmailCompaign: React.FC = () => {
               inputProps={{
                 "aria-label": "Add Target Email",
               }}
+              hasValue={!!formData.targetEmail}
             >
               <MenuItem value="" disabled>
                 Add target email
@@ -241,6 +244,7 @@ const NewEmailCompaign: React.FC = () => {
               inputProps={{
                 "aria-label": "Select email tempelet",
               }}
+              hasValue={!!formData.phishingEmail}
             >
               <MenuItem value="" disabled>
                 Select email tempelet{" "}
@@ -266,6 +270,7 @@ const NewEmailCompaign: React.FC = () => {
               inputProps={{
                 "aria-label": "Select landing page templete",
               }}
+              hasValue={!!formData.landingPage}
             >
               <MenuItem value="" disabled>
                 Select landing page templete{" "}
@@ -309,6 +314,7 @@ const NewEmailCompaign: React.FC = () => {
                   inputProps={{
                     "aria-label": "Select Time Zone",
                   }}
+                  hasValue={!!formData.timeZone}
                 >
                   <MenuItem value="">
                     <p>Select Time Zone</p>
