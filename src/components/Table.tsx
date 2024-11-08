@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -25,13 +25,26 @@ const TableComponent: React.FC<TableComponentProps> = ({
   renderActions,
   onRowClick,
 }) => {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <TableContainer
       component={Paper}
+      key={screenWidth}
       sx={{
         border: "1px solid #C1C1C1",
-        maxHeight: "65vh",
-        overflow: "auto",
+        maxHeight: { xs: "50vh", sm: "65vh" },
+        width: "100%",
+        overflowX: "auto",
       }}
     >
       <Table stickyHeader>
@@ -40,7 +53,12 @@ const TableComponent: React.FC<TableComponentProps> = ({
             {headers.map((header, index) => (
               <TableCell
                 key={index}
-                sx={{ fontWeight: "bold", color: "#000000" }}
+                sx={{
+                  fontWeight: "bold",
+                  color: "#000000",
+                  padding: { xs: "8px", sm: "16px" },
+                  fontSize: { xs: "0.875rem", sm: "1rem" },
+                }}
               >
                 {header}
               </TableCell>
@@ -60,15 +78,23 @@ const TableComponent: React.FC<TableComponentProps> = ({
               }}
               onClick={() => onRowClick && onRowClick(row)}
             >
-              {/* Render each value except 'id' */}
               {Object.entries(row).map(([key, value], idx) => {
                 if (key !== "id") {
-                  return <TableCell key={idx}>{value as ReactNode}</TableCell>;
+                  return (
+                    <TableCell
+                      key={idx}
+                      sx={{
+                        fontSize: { xs: "0.875rem", sm: "1rem" },
+                        padding: { xs: "8px", sm: "16px" },
+                      }}
+                    >
+                      {value as ReactNode}
+                    </TableCell>
+                  );
                 }
                 return null;
               })}
 
-              {/* Add action icons to the last column */}
               {renderActions && (
                 <TableCell>
                   <Box
