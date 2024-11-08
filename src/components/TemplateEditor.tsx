@@ -2,7 +2,7 @@ import { convertToRaw, EditorState } from "draft-js";
 import { useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Box,  Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Email } from "../data/emailTemplateData";
 import logoUrl from "../images/png-clipart-paypal-logo-paypal-blue-text-removebg-preview.png";
@@ -19,10 +19,15 @@ const StyledEditorContainer = styled("div")({
     padding: "16px",
     borderRadius: "8px",
     minHeight: "350px",
+    whiteSpace: "pre-wrap",
+    wordBreak: "break-word",
+    overflowWrap: "break-word",
+    overflowX: "hidden",
+    maxWidth: "100%",
   },
 });
 
-const StyledCreateBtn = styled(Button)(({theme}) => ({
+const StyledCreateBtn = styled(Button)(({ theme }) => ({
   height: "50px",
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.common.white,
@@ -107,10 +112,7 @@ const EmailEditor: React.FC = () => {
         >
           Cancel
         </Button>
-        <StyledCreateBtn
-          variant="contained"
-          onClick={handleCreateTemplate}
-        >
+        <StyledCreateBtn variant="contained" onClick={handleCreateTemplate}>
           Create Template
         </StyledCreateBtn>
       </Box>
